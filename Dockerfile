@@ -1,0 +1,27 @@
+FROM alpine:latest
+
+ADD install.sh install.sh
+RUN sh install.sh && rm install.sh
+
+ENV DATABASES ''
+ENV POSTGRES_HOST ''
+ENV POSTGRES_PORT 5432
+ENV POSTGRES_USER_FILE ''
+ENV POSTGRES_PASSWORD_FILE ''
+ENV PGDUMP_EXTRA_OPTS ''
+ENV S3_ACCESS_KEY_ID_FILE ''
+ENV S3_SECRET_ACCESS_KEY_FILE ''
+ENV S3_BUCKET ''
+ENV S3_REGION 'us-west-1'
+ENV S3_PATH 'backup'
+ENV S3_ENDPOINT ''
+ENV S3_S3V4 'no'
+ENV SCHEDULE ''
+ENV PASSPHRASE_FILE ''
+ENV BACKUP_KEEP_DAYS ''
+
+ADD run.sh run.sh
+ADD env.sh env.sh
+ADD backup.sh backup.sh
+
+CMD ["sh", "run.sh"]
