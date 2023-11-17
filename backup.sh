@@ -18,9 +18,8 @@ timestamp=$(date +"%Y-%m-%dT%H:%M:%S")
 s3_uri_base="s3://${S3_BUCKET}/${POSTGRES_DATABASE}/${POSTGRES_DATABASE}_${timestamp}.dump"
 
 if [ -n "$PASSPHRASE_FILE" ]; then
-  export PASSPHRASE=$(cat ${PASSPHRASE_FILE})
   echo "Encrypting backup..."
-  gpg --batch --encrypt --recipient-file "$PASSPHRASE" db.dump
+  gpg --batch --encrypt --recipient-file "$PASSPHRASE_FILE" db.dump
   if [ $? -eq 0 ]; then
     rm db.dump
     local_file="db.dump.gpg"
