@@ -20,7 +20,7 @@ s3_uri_base="s3://${S3_BUCKET}/${POSTGRES_DATABASE}/${POSTGRES_DATABASE}_${times
 if [ -n "$PASSPHRASE_FILE" ]; then
   export PASSPHRASE=$(cat ${PASSPHRASE_FILE})
   echo "Encrypting backup..."
-  gpg --symmetric --batch --passphrase "$PASSPHRASE" db.dump
+  gpg --batch --encrypt --recipient-file "$PASSPHRASE" db.dump
   if [ $? -eq 0 ]; then
     rm db.dump
     local_file="db.dump.gpg"
